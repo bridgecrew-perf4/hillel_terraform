@@ -1,3 +1,5 @@
+//Homework
+
 output "public_networks" {
   value = aws_subnet.public[*]
 }
