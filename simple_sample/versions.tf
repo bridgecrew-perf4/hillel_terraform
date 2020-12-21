@@ -11,8 +11,8 @@ provider "aws" {
   //
   // OR
   //
-  // export AWS_ACCESS_KEY_ID="anaccesskey"
-  // export AWS_SECRET_ACCESS_KEY="asecretkey"
+  //  access_key = "my-access-key"
+  //  secret_key = "my-secret-key"
 
   region = "us-east-1"
 }

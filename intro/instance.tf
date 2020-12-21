@@ -7,20 +7,27 @@ locals {
 }
 
 resource "aws_instance" "this" {
-  ami                    = var.ami_id    // Homework: change to a variable (type string)
-  instance_type          = "t2.micro"                 // Homework: change to a variable (type string)
+  ami                    = var.ami_id
+  instance_type          = "t2.micro"                 // HOMEWORK: change to a variable (type — string)
   vpc_security_group_ids = [aws_security_group.this.id]
 
-  // Homework: define keypair via variable (type string) with default value (your own public key)
-  //           https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
+//  HOMEWORK key_name = ""
 
   tags = local.common_tags
 }
+
+// HOMEWORK: define keypair via variable (type string) with default value (your own public key)
+//           https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
 
 resource "aws_eip" "this" {
   count    = (var.eip_attach ? 1 : 0)
   instance = aws_instance.this.id
   tags     = local.common_tags
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.this.id
+  allocation_id = aws_eip.this[0].id
 }
 
 resource "aws_security_group" "this" {
@@ -34,9 +41,6 @@ resource "aws_security_group" "this" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  // Homework: get 'default' VPC id using data source and define VPC for security group explicitly
-  // https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc
 
 }
 
@@ -70,7 +74,10 @@ resource "aws_security_group_rule" "HTTPS" {
 
 
 output "instance_pub_ip" {
-  value     = aws_instance.this.public_ip
+  value     = aws_instance.this.public_ip // HOMEWORK: show elastic ip (aws_eip) value if one is associated.
+  // https://www.terraform.io/docs/configuration/expressions/conditionals.html
+  // https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip#attributes-reference
+
   sensitive = false
 }
 output "instance_pub_dns" {
