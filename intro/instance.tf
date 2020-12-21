@@ -11,23 +11,18 @@ resource "aws_instance" "this" {
   instance_type          = "t2.micro"                 // HOMEWORK: change to a variable (type — string)
   vpc_security_group_ids = [aws_security_group.this.id]
 
-//  HOMEWORK key_name = ""
+//  HOMEWORK hint - key_name = ""
 
   tags = local.common_tags
 }
-
-// HOMEWORK: define keypair via variable (type string) with default value (your own public key)
+// HOMEWORK: describe aws_key_pair resource
+//           define keypair via variable (type string) with default value (your own public key)
 //           https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
 
 resource "aws_eip" "this" {
   count    = (var.eip_attach ? 1 : 0)
   instance = aws_instance.this.id
   tags     = local.common_tags
-}
-
-resource "aws_eip_association" "eip_assoc" {
-  instance_id   = aws_instance.this.id
-  allocation_id = aws_eip.this[0].id
 }
 
 resource "aws_security_group" "this" {
