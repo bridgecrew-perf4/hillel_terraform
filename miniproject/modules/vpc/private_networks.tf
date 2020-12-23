@@ -1,4 +1,3 @@
-
 resource "aws_subnet" "private" {
   count                   = local.az_num
 
