@@ -6,8 +6,3 @@ terraform {
     }
   }
 }
-provider "aws" {
-  profile = "hillel"
-
-  region = "us-east-1"
-}
