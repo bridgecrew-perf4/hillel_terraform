@@ -1,12 +1,9 @@
 terraform {
-  required_version = "~> 0.14"
   required_providers {
     aws = {
-      version = "~> 3.21"
+      source  = "hashicorp/aws"
+      version = ">= 3.20"
     }
   }
-}
-provider "aws" {
-  profile  = "hillel"
-  region = "us-east-1"
+  required_version = ">= 0.14"
 }
