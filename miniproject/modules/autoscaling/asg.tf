@@ -23,14 +23,19 @@ data "aws_ami" "this" {
   ]
 }
 
+data "aws_security_group" "default_sg" {
+  vpc_id = var.vpc_id
+  name = "default"
+}
+
 
 resource "aws_launch_template" "this" {
 //  name                   = ""
-  description            = "Managed by Terraform."
+
   image_id      = data.aws_ami.this.image_id
   instance_type = var.instance_type
   key_name      = aws_key_pair.this.key_name
-  vpc_security_group_ids = var.security_groups_list
+  vpc_security_group_ids = [data.aws_security_group.default_sg.id, aws_security_group.web.id]
 
   update_default_version = true
 
@@ -62,11 +67,10 @@ resource "aws_autoscaling_group" "this" {
     version = "$Latest"
   }
   health_check_type   = "EC2"
-  vpc_zone_identifier = var.subnets_ids_list
-  tags                = var.tags
+  vpc_zone_identifier = var.subnet_ids_list
 }
 
 resource "aws_key_pair" "this" {
-  key_name_prefix = "cluster"
+  key_name_prefix = "asg"
   public_key      = var.public_key
 }

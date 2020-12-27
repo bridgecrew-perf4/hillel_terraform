@@ -17,9 +17,13 @@ module "vpc" {
   tags     = local.common_tags
 }
 
-//module "autoscaling" {
-//  source = "./modules/autoscaling"
-//}
+module "autoscaling" {
+  source = "./modules/autoscaling"
+  instance_type = "t2.micro"
+  subnet_ids_list = module.vpc.public_networks //will change this to private sn on the next class
+  vpc_id = module.vpc.vpc_id
+  tags = local.common_tags
+}
 //
 //module "application_load_balancer" {
 //  source = "./modules/alb"
@@ -29,10 +33,3 @@ module "vpc" {
 //  value = ""
 //}
 
-output "vpc_info" {
-  value = {
-    public_networks  = module.vpc.public_networks
-    private_networks = module.vpc.private_networks
-    vpc_id           = module.vpc.vpc_id
-  }
-}
