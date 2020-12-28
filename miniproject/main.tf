@@ -20,16 +20,15 @@ module "vpc" {
 module "autoscaling" {
   source = "./modules/autoscaling"
   instance_type = "t2.micro"
-  subnet_ids_list = module.vpc.public_networks //will change this to private sn on the next class
+  subnet_ids_list = module.vpc.public_networks
   vpc_id = module.vpc.vpc_id
   tags = local.common_tags
+  target_group_arns = [module.load_balancer.target_group_arns]
 }
-//
-//module "application_load_balancer" {
-//  source = "./modules/alb"
-//}
-//
-//output "web_endpoint" {
-//  value = ""
-//}
 
+module "load_balancer" {
+  source = "./modules/load_balancer"
+  subnet_ids_list = module.vpc.public_networks
+  tags = local.common_tags
+  vpc_id = module.vpc.vpc_id
+}

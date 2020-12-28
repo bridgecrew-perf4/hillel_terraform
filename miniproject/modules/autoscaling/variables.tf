@@ -10,3 +10,7 @@ variable "public_key" {
 }
 
 variable "vpc_id" {}
+
+variable "target_group_arns" {
+  type = set(string)
+}
