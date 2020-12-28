@@ -25,15 +25,15 @@ data "aws_ami" "this" {
 
 data "aws_security_group" "default_sg" {
   vpc_id = var.vpc_id
-  name = "default"
+  name   = "default"
 }
 
 
 resource "aws_launch_template" "this" {
-  name_prefix = "hillel"
-  image_id      = data.aws_ami.this.image_id
-  instance_type = var.instance_type
-  key_name      = aws_key_pair.this.key_name
+  name_prefix            = "hillel"
+  image_id               = data.aws_ami.this.image_id
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.this.key_name
   vpc_security_group_ids = [data.aws_security_group.default_sg.id]
 
   update_default_version = true
@@ -54,7 +54,7 @@ resource "aws_launch_template" "this" {
     tags          = var.tags
   }
   user_data = filebase64("${path.module}/user_data.sh")
-  tags = var.tags
+  tags      = var.tags
 }
 
 resource "aws_autoscaling_group" "this" {
@@ -68,9 +68,9 @@ resource "aws_autoscaling_group" "this" {
     id      = aws_launch_template.this.id
     version = "$Latest"
   }
-  health_check_type   = "ELB" //change to ELB on the next class
+  health_check_type         = "ELB" //change to ELB on the next class
   health_check_grace_period = 45
-  vpc_zone_identifier = var.subnet_ids_list
+  vpc_zone_identifier       = var.subnet_ids_list
 }
 
 resource "aws_key_pair" "this" {

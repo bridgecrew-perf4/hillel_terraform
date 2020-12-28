@@ -1,7 +1,7 @@
 resource "aws_security_group" "web" {
   name_prefix = "hillel"
   tags        = var.tags
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
   egress { // allow outgoing traffic to anywhere
     from_port   = 0

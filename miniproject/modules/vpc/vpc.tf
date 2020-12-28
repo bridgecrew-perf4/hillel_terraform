@@ -3,7 +3,7 @@ resource "aws_vpc" "this" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   instance_tenancy     = "default"
-  tags                 = merge(var.tags, {"Name"=var.vpc_cidr})
+  tags                 = merge(var.tags, { "Name" = var.vpc_cidr })
 }
 
 resource "aws_internet_gateway" "this" {

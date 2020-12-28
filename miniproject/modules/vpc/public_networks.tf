@@ -1,5 +1,5 @@
 resource "aws_subnet" "public" {
-  count                   = local.az_num
+  count = local.az_num
 
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index)
@@ -10,7 +10,7 @@ resource "aws_subnet" "public" {
 
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.this.id
-  tags                 = merge(var.tags, {"Name"="Public Route Table"})
+  tags   = merge(var.tags, { "Name" = "Public Route Table" })
 }
 
 resource "aws_route" "igw_route" {
