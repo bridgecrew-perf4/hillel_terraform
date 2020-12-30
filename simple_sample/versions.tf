@@ -7,12 +7,6 @@ terraform {
   }
 }
 provider "aws" {
-  // profile  = "customprofile"
-  //
-  // OR
-  //
-  //  access_key = "my-access-key"
-  //  secret_key = "my-secret-key"
-
+  profile  = "hillel"
   region = "us-east-1"
 }
