@@ -1,4 +1,4 @@
-###Написать Terraform module, который определяет EC2 instance и несколько сопутствующих ему ресурсов.
+### Написать Terraform module, который определяет EC2 instance и несколько сопутствующих ему ресурсов.
 
 Модуль должен принимать несколько входящих параметров (но у них должны быть и значения по умолчанию):
 
@@ -16,7 +16,7 @@
 Избегайте hardcoding.
 
 
-#####Доп. инфо:
+##### Доп. инфо:
 
 Resource: aws_instance
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
