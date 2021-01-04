@@ -68,8 +68,8 @@ resource "aws_autoscaling_group" "this" {
     id      = aws_launch_template.this.id
     version = "$Latest"
   }
-  health_check_type         = "ELB" //change to ELB on the next class
-  health_check_grace_period = 120
+  health_check_type         = "ELB"
+  health_check_grace_period = 240
   vpc_zone_identifier       = var.subnet_ids_list
 }
 
